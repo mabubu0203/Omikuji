@@ -1,0 +1,400 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "OmikujiApi Reference",
+    "description": "OmikujiAPIの使い方",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "0.1.0"
+  },
+  "tags": [
+    {
+      "name": "omikuji",
+      "description": "Operations about omikuji"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost",
+      "description": "Development"
+    }
+  ],
+  "paths": {
+    "/omikuji/random": {
+      "get": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Get omikuji by random",
+        "operationId": "getOmikujiByRandom",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Omikuji"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unsei/{id}": {
+      "get": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Get unsei by unsei id",
+        "operationId": "getUnseiById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be fetched. Use 1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unsei"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unsei not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error404"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unsei/list": {
+      "get": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Get unsei",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/formatParam"
+          }
+        ],
+        "operationId": "getUnseiList",
+        "responses": {
+          "200": {
+            "description": "Successfully returned a list of unsei",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Unsei"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comment/": {
+      "post": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Create comment",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createComment",
+        "requestBody": {
+          "description": "Created comment object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid comment supplied",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "409": {
+            "description": "Comment Conflict",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/comment/{id}": {
+      "get": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Get comment by comment id",
+        "operationId": "getCommentById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be fetched. Use 1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Comment not found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Updated comment",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated comment object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid comment supplied",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "Comment not found",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "409": {
+            "description": "Comment Conflict",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Delete comment",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid comment supplied",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "Coment not found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/comment/list": {
+      "get": {
+        "tags": [
+          "omikuji"
+        ],
+        "summary": "Get comments",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/formatParam"
+          }
+        ],
+        "operationId": "getCommentsList",
+        "responses": {
+          "200": {
+            "description": "Successfully returned a list of comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "formatParam": {
+        "name": "format",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/format"
+        }
+      }
+    },
+    "schemas": {
+      "format": {
+        "type": "string",
+        "description": "api response format",
+        "enum": [
+          "json",
+          "tsv",
+          "csv"
+        ],
+        "default": "json"
+      },
+      "GenericError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Error404": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "extensions": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "data": {
+            "type": "string"
+          }
+        }
+      },
+      "Omikuji": {
+        "$ref": "./schemas/omikuji.json#/definitions/omikuji"
+      },
+      "Comment": {
+        "$ref": "./schemas/comment.json#/definitions/comment"
+      },
+      "Unsei": {
+        "$ref": "./schemas/unsei.json#/definitions/unsei"
+      }
+    }
+  }
+}

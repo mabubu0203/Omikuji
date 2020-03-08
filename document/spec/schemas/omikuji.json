@@ -1,0 +1,16 @@
+{
+  "definitions": {
+    "omikuji": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "comment": {
+          "$ref": "./comment.json#/definitions/comment"
+        },
+        "unsei": {
+          "$ref": "./unsei.json#/definitions/unsei"
+        }
+      }
+    }
+  }
+}

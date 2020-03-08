@@ -1,0 +1,19 @@
+{
+  "definitions": {
+    "comment": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "integer",
+          "format": "int64"
+        },
+        "value": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
