@@ -1,0 +1,3 @@
+[alias]
+    ec = commit --allow-empty -m \"Make pull-request [ci skip]\"
+    mkpr = !"f() { git checkout -b $1; git ec; git push -u origin $1; open $(hub pull-request -m "$1"); }; f"

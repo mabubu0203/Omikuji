@@ -16,7 +16,7 @@ Spring Boot + AWS + OpenAPI を用いておみくじの結果をjsonで返却す
 
 ## 開発環境について
 
-[CONTRIBUTING](./CONTRIBUTING.md)
+[CONTRIBUTING](.github/CONTRIBUTING.md)
 
 ## リリースについて
 
