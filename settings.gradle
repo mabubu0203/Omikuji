@@ -1,0 +1,5 @@
+rootProject.name = "Omikuji"
+include(
+        "micro-api",
+        "micro-common"
+)

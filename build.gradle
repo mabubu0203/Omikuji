@@ -1,0 +1,94 @@
+buildscript {
+    ext {
+        // ソースと実行ファイルのJavaバージョン
+        jdkVersion = jdkVersion
+        defaultEncoding = defaultEncoding
+
+        gradleVersion = gradleVersion
+
+        // SpringBoot
+        springBootVersion = springbootVersion
+
+        // Omikuji
+        omikujiVersion = omikujiVersion
+    }
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id "org.springframework.boot" version "2.2.5.RELEASE"
+    id "se.bjurr.gitchangelog.git-changelog-gradle-plugin" version "1.64"
+}
+
+subprojects {
+
+    apply from: "$rootDir/gradle/checkstyle.gradle"
+    apply from: "$rootDir/gradle/java.gradle"
+    apply from: "$rootDir/gradle/spring.gradle"
+
+    configurations {
+        developmentOnly
+        runtimeClasspath.extendsFrom(developmentOnly)
+        testAnnotationProcessor.extendsFrom(annotationProcessor)
+        testImplementation.extendsFrom(compileOnly)
+
+    }
+
+    repositories {
+        jcenter()
+    }
+
+}
+
+project(":micro-api") {
+    dependencies {
+        implementation(project(":micro-common"))
+    }
+}
+
+project(":micro-common") {
+}
+
+task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+    file = new File("CHANGELOG.md")
+    fromRepo = file("$rootProject")
+    templateContent = """
+Changelog of ${rootProject.name}.
+
+{{#tags}}
+## {{name}}
+ {{#issues}}
+  {{#hasIssue}}
+   {{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+   {{/hasLink}}
+   {{^hasLink}}
+### {{name}} {{issue}} {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+   {{/hasLink}}
+  {{/hasIssue}}
+  {{^hasIssue}}
+### {{name}}
+  {{/hasIssue}}
+
+  {{#commits}}
+**{{{messageTitle}}}**
+
+{{#messageBodyItems}}
+ * {{.}}
+{{/messageBodyItems}}
+
+[{{hash}}](https://github.com/{{ownerName}}/{{repoName}}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+
+  {{/commits}}
+
+ {{/issues}}
+{{/tags}}
+ """
+}
+
+wrapper {
+    gradleVersion = gradleVersion
+}

@@ -1,0 +1,142 @@
+# ----------------------------------------
+# CORE PROPERTIES
+# ----------------------------------------
+spring:
+  # ----------------------------------------
+  # DEVTOOLS PROPERTIES
+  # ----------------------------------------
+  devtools:
+    livereload:
+      enabled: true
+      port: 35219
+    restart:
+      enabled: true
+      poll-interval: 1000
+    quiet-period: 400
+  remote:
+    debug:
+      enabled: false
+      local-port: 8000
+    restart:
+      enabled: false
+      secret-header-name: X-AUTH-TOKEN
+  resources:
+    chain:
+      html-application-cache: true
+      enabled: true
+      strategy:
+        content:
+          enabled: true
+          paths: /webjars/swagger-ui/**.*
+# ----------------------------------------
+# WEB PROPERTIES
+# ----------------------------------------
+server:
+  port: 9001
+  servlet:
+    context-path: /OmikujiApi
+    jsp:
+      registered: false
+  ssl:
+    enabled: false
+  tomcat:
+    accesslog:
+      directory: logs
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern: common
+      prefix: access_log
+      rotate: true
+      suffix: .log
+    uri-encoding: UTF-8
+# ----------------------------------------
+# SECURITY PROPERTIES
+# ----------------------------------------
+security:
+  headers:
+    require-ssl: false
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+  cloudfoundry:
+    enabled: false
+  endpoint:
+    auditevents:
+      enabled: true
+    beans:
+      enabled: true
+    conditions:
+      enabled: true
+    configprops:
+      enabled: true
+    env:
+      enabled: true
+    flyway:
+      enabled: true
+    health:
+      enabled: true
+    heapdump:
+      enabled: true
+    info:
+      enabled: true
+    jmx:
+      enabled: false
+    jolokia:
+      enabled: true
+      path: /jolokia
+      sensitive: true
+    liquibase:
+      enabled: false
+    logfile:
+      enabled: true
+      path: /logfile
+      sensitive: true
+    loggers:
+      enabled: true
+    mappings:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    scheduledtasks:
+      enabled: false
+    sessions:
+      enabled: false
+    shutdown:
+      enabled: false
+    threaddump:
+      enabled: false
+    trace:
+      enabled: false
+    web:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: auditevents,beans,conditions,configprops,env,health,heapdump,info,jolokia,logfile,loggers,refresh,mappings,metrics,web
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: true
+  info:
+    build:
+      enabled: true
+    defaults:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+  jolokia:
+    enabled: true
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+  version: "0.1.0"
